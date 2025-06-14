@@ -1,6 +1,8 @@
 import { createSignal, createContext, useContext, onMount, Component, JSXElement } from "solid-js";
 import type { Accessor} from "solid-js";
 import * as Colyseus from "colyseus.js";
+import { getStateCallbacks } from "colyseus.js";
+import { Schema } from "@colyseus/schema";
 
 interface GameDataProviderProps {
     children: JSXElement
@@ -13,12 +15,13 @@ interface PlayerInfo {
 
 type Players = Map<string, PlayerInfo>
 
-interface GameRoomState {
+interface GameRoomState extends Schema {
     bankPoints: number;
-    players: PlayerInfo[];
+    players: any;
     currentRoundQuestion: string;
-    currentRoundBets: number;
+    currentRoundBets: any;
     currentTurnCard: string;
+    currentTurn: string;
     currentRoundMatchCount: number;
     isRoundOver: boolean;
     listen: (eventName: string, callback: (value: any) => void) => void;
@@ -40,66 +43,51 @@ const useGameDataProviderValue = () => {
     onMount(async () => {
         var host = window.document.location.host.replace(/:.*/, '');
         var client = new Colyseus.Client(location.protocol.replace("http", "ws") + "//" + host + (location.port ? ':' + "2567" : ''));
-        room = await client.joinOrCreate<GameRoomState>("caixin");
+        room = await client.joinOrCreate<GameRoomState>("caixin_room");
         setCurrSessionId(room.sessionId);
 
         room.onMessage("gameStart", (message) => {
             setQuestionMaker(message.questionMaker);
         });
 
-        // @ts-ignore 
-        room.state.players.onAdd((player: PlayerInfo, sessionId: string) => {
-            // @ts-ignore 
-            player.listen("cards", (value: string[]) => {
-                // The value returned from the server is an [Array schema](https://docs.colyseus.io/state/schema/?h=arrayschema#arrayschema)
-                // Need to convert that to an actual array to use
-                const playerCards = Array.from(value);
-                if (sessionId === room.sessionId) {
-                    setCurrPlayerGameStatus(prev => ({
-                        points: prev.points,
-                        cards: playerCards,
-                    }));
-                }
-            });
+        const $ = getStateCallbacks(room);
 
-            // @ts-ignore 
-            player.listen("points", (value: number) => {
+        $(room.state).players.onAdd((player: any, sessionId: string) => {
+            $(player).onChange(() => {
                 if (sessionId === room.sessionId) {
-                    setCurrPlayerGameStatus(prev => ({
-                        points: value,
-                        cards: prev.cards,
-                    }));
+                    setCurrPlayerGameStatus({
+                        points: player.points,
+                        cards: Array.from(player.cards),
+                    });
                 }
             });
         });
-        
-        // @ts-ignore 
-        room.state.currentRoundBets.onAdd((bet: any, key: string) => {
-            console.log("bet added", bet, key);
 
-            bet.players.onAdd((value: any) => {
-                setCurrentRoundBets(prev => {
-                    const newMap = new Map(prev);
-                    if (!prev.has(key)) {
-                        newMap.set(key, new Set())
-                    }
-                    newMap.get(key)?.add(value)
-                    return newMap;
+        $(room.state).currentRoundBets.onAdd((bet: any, key: string) => {
+            if (bet.players) {
+                $(bet).players.onAdd((value: any) => {
+                    setCurrentRoundBets(prev => {
+                        const newMap = new Map(prev);
+                        if (!prev.has(key)) {
+                            newMap.set(key, new Set())
+                        }
+                        newMap.get(key)?.add(value)
+                        return newMap;
+                    });
                 });
-                console.log("value added to set wth key:", key, value);
-            });
+            }
         });
 
-        room.state.listen("currentRoundQuestion", (currValue: string) => {
+        $(room.state).listen("currentRoundQuestion", (currValue: string) => {
             setCurrRoundQuestion(currValue);
         });
-        room.state.listen("currentTurn", (currValue: string) => {
+        $(room.state).listen("currentTurn", (currValue: string) => {
             setCurrentTurn(currValue);
         });
-        room.state.listen("bankPoints", (currValue: number) => {
+        $(room.state).listen("bankPoints", (currValue: number) => {
             setBankPoints(currValue);
         });
-        room.state.listen("currentTurnCard", (currValue: string) => {
+        $(room.state).listen("currentTurnCard", (currValue: string) => {
             setCurrentTurnCard(currValue);
         });
     });
