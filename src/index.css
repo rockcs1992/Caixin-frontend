@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "Youshe";
+  src: url("./assets/YouSheBiaoTiYuan-2.otf");
+}
+
+body {
+  margin: 0;
+  font-family: "Youshe", BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: black;
+}
+
+

@@ -1,0 +1,30 @@
+.playerDisplayContainer {
+    width: 12vw;
+}
+
+.playerDisplayInfo {
+    background-color: #c286ff;
+    padding: 1vmin;
+    border-radius: 1vmin;
+    width: 100%;
+    color: white;
+    text-align: center;
+    margin-bottom: 1vmin;
+    box-sizing: border-box;
+}
+
+.playerDisplayCards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;
+}
+
+.playerDisplayCard {
+    background-color: white;
+    padding: 1vmin 2%;
+    margin-top: 1vmin;
+    width: 32%;
+    border: 1px solid #34a7a6;
+    border-radius: 0.8vmin;
+    box-sizing: border-box;
+}

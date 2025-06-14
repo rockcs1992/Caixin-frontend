@@ -1,0 +1,62 @@
+.firstPersonContainer {
+    width: 100%;
+    background-color: #bb9fff;
+    padding: 2vmin 10vmin;
+    box-sizing: border-box;
+    height: 20vmin;
+    margin-top: auto;
+}
+
+.firstPersonTopRow {
+    height: 33%;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    box-sizing: border-box;
+    padding-bottom: 1vmin;
+}
+
+.infoBox {
+    padding: 0.5vmin 1vmin;
+    background-color: white;
+    border: 1px solid #34a7a6;
+    border-radius: 1vmin;
+    display: inline-block;
+    margin-left: 1vmin;
+}
+
+.actionButton {
+    background-color: black;
+    margin-left: 1vmin;
+    color: white;
+    padding: 0.5vmin 1vmin;
+    border-radius: 1vmin;
+    cursor: pointer;
+}
+
+.firstPersonCardContainer {
+    display: flex;
+    width: 100%;
+    padding-top: 2vmin;
+    gap: 1vmin;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.firstPersonCard {
+    background: white;
+    padding: 2vmin;
+    min-width: 10vw;
+    border-radius: 1vmin;
+    box-sizing: border-box;
+    box-shadow: 3px 5px grey;
+}
+
+.firstPersonCardDiv {
+    cursor: pointer;
+}
+
+.selected {
+    border: 2px solid red;
+}

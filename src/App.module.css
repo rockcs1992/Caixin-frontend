@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+}
+
+.container {
+  background: linear-gradient(#9c59fe, #6f53fd);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.firstRow {
+  display: flex;
+  gap: 2vmin;
+  padding-top: 2vmin;
+  flex-direction: row;
+}
+
+.secondRow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 5vmin;
+}
+

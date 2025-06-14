@@ -1,0 +1,61 @@
+.betTableContainer {
+    width: 60vw;
+    height: 40vh;
+    border: 1px solid #b578fe;
+    background-color: white;
+    position: relative;
+    border-radius: 2vmin;
+    position: absolute;
+}
+
+.betBonusContainer {
+    width: 45%;
+    margin-left: auto;
+    display: flex;
+    gap: 1vmin;
+    color: #dc4a26;
+    align-items: center;
+    justify-content: end;
+    margin-right: 2vmin;
+}
+
+.betTableRow {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+}
+
+.betTableContentCard {
+    background-color: #ffdb0a;
+    height: 100%;
+    border-radius: 4px;
+    text-align: left;
+    position: relative;
+}
+
+.betTableContent {
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+}
+
+.betTrackerContainer {
+    width: 5vmin;
+    height: 10vmin;
+    border-radius: 5vmin;
+    background-color: transparent;
+    border: 1px dashed white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5vmin 0;
+    align-items: center;
+    gap: 0.5vmin;
+}
+
+.betTrackerGroup {
+    display: flex;
+    justify-content: center;
+    gap: 1vw;
+}
